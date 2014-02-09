@@ -1,6 +1,7 @@
 import csv
 import sys
-import re
+import re 
+import pylab as pl
 
 # Steps
 #   - Dates are there in 1st and 2nd column
@@ -8,6 +9,20 @@ import re
 #   - Data used in 10KB is in 9th column
 
 input_file='/Users/nsonti/github_projects/airtel_broadband_data_parser/airtel_usage_feb_9'
+
+def plot_graph(input_dict,out_file_name="Default.pdf"):
+    x_axis=[]
+    y_axis=[]
+    x_axis=input_dict.keys()
+    y_axis=input_dict.values()
+    print 'input dict : '+str(input_dict)
+    print 'x_axis : '+str(x_axis)
+    print 'y_axis : '+str(y_axis)
+    fig = pl.figure()
+    ax = pl.subplot(111)
+    ax.bar(range(len(x_axis)), y_axis)
+    pl.savefig(out_file_name)
+    return
 
 def remove_multiple_instances_from_list(list):
     new_list=[]
@@ -56,24 +71,32 @@ def custom_get_data_from_column_where(file_name,delimiter,input_col_month,input_
 
 def get_output_dic_day_based():
     global input_file
+    out_dict={}
     day_list_tmp = get_data_from_column(input_file,' ',0)
     day_list = remove_multiple_instances_from_list(day_list_tmp)
     #print str(day_list)
 
     for days in day_list:
-        print str(days)
         tmp_day_out = map(int,get_data_from_column_where(input_file,' ',0,str(days),9))
-        print str(sum(tmp_day_out)*10/1024)+" MB"
+        out_val= sum(tmp_day_out)*10/1024
+        print str(days)+" : "+str(sum(tmp_day_out)*10/1024)+" MB"
+        out_dict[str(days)]=out_val
+
+    plot_graph(out_dict,"day_based_output")
     return
 
 def get_output_dic_date_based():
     global input_file
+    out_dict={}
     date_list_tmp = get_data_from_column(input_file,' ',1,2)
     date_list = remove_multiple_instances_from_list(date_list_tmp)
     #print 'Date list\n'+str(date_list)
     for date in date_list:
         tmp_date_out = map(int, custom_get_data_from_column_where(input_file,' ',1,2,str(date),9))
         print str(date)+" : "+str(sum(tmp_date_out)*10/1024)+" MB"
+        out_dict[str(date)]=sum(tmp_date_out)*10/1024
+
+    plot_graph(out_dict,"date_based_output")
     return
 
 def main():
