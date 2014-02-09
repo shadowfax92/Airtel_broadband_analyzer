@@ -41,11 +41,24 @@ def get_data_from_column_where(file_name,delimiter,input_col_no,input_col_value,
             col.append(tmp)
     return col
 
+# custom function to get data for each date like Feb 01, Jan 29
+def custom_get_data_from_column_where(file_name,delimiter,input_col_month,input_col_date,input_col_value,*output_col_no):
+    fh = open(file_name,'rb')
+    col = []
+    for line in csv.reader(fh,delimiter=' ',skipinitialspace=True):
+        store_string=""
+        if str(line[input_col_month]+" "+line[input_col_date])==input_col_value:
+            for cols in output_col_no:
+                store_string=store_string+str(line[cols])+" "
+            tmp = store_string.rstrip()
+            col.append(tmp)
+    return col
+
 def get_output_dic_day_based():
     global input_file
     day_list_tmp = get_data_from_column(input_file,' ',0)
     day_list = remove_multiple_instances_from_list(day_list_tmp)
-    print str(day_list)
+    #print str(day_list)
 
     for days in day_list:
         print str(days)
@@ -53,14 +66,19 @@ def get_output_dic_day_based():
         print str(sum(tmp_day_out)*10/1024)+" MB"
     return
 
+def get_output_dic_date_based():
+    global input_file
+    date_list_tmp = get_data_from_column(input_file,' ',1,2)
+    date_list = remove_multiple_instances_from_list(date_list_tmp)
+    #print 'Date list\n'+str(date_list)
+    for date in date_list:
+        tmp_date_out = map(int, custom_get_data_from_column_where(input_file,' ',1,2,str(date),9))
+        print str(date)+" : "+str(sum(tmp_date_out)*10/1024)+" MB"
+    return
+
 def main():
     global input_file
     get_output_dic_day_based()
-    #print '1st'
-    #print str(get_data_from_column(input_file,' ',9))
-    #print '2nd'
-    #print str(get_data_from_column(input_file,' ',1,2))
-    #print '3rd'
-    #print str(get_data_from_column(input_file,' ',0))
+    get_output_dic_date_based()
 
 main()
