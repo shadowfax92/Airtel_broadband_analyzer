@@ -8,7 +8,7 @@ import pylab as pl
 #   - Days are in 0th column
 #   - Data used in 10KB is in 9th column
 
-input_file='/Users/nsonti/github_projects/airtel_broadband_data_parser/airtel_usage_feb_9'
+input_file='/Users/nsonti/github_projects/airtel_broadband_data_parser/sample_input'
 
 def plot_graph(input_dict,out_file_name="Default.pdf"):
     x_axis=[]
