@@ -15,13 +15,25 @@ def plot_graph(input_dict,out_file_name="Default.pdf"):
     y_axis=[]
     x_axis=input_dict.keys()
     y_axis=input_dict.values()
+    int_x_axis=range(len(x_axis))
     print 'input dict : '+str(input_dict)
     print 'x_axis : '+str(x_axis)
     print 'y_axis : '+str(y_axis)
+
     fig = pl.figure()
     ax = pl.subplot(111)
-    ax.bar(range(len(x_axis)), y_axis)
+    #pl.plot(range(len(x_axis)),y_axis,width=100)
+    pl.ylabel('MB',fontsize='20')
+    pl.xticks(range(len(x_axis)),x_axis,rotation='vertical')
+    ax.bar(range(len(x_axis)),y_axis,align='center')
+    #pl.show()
     pl.savefig(out_file_name)
+
+
+    #fig = pl.figure()
+    #ax = pl.subplot(111)
+    #ax.bar(range(len(x_axis)),y_axis)
+    #pl.savefig(out_file_name)
     return
 
 def remove_multiple_instances_from_list(list):
