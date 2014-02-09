@@ -24,6 +24,8 @@ def plot_graph(input_dict,out_file_name="Default.pdf"):
     ax = pl.subplot(111)
     #pl.plot(range(len(x_axis)),y_axis,width=100)
     pl.ylabel('MB',fontsize='20')
+    pl.xlabel('Time',fontsize='20')
+    pl.subplots_adjust(bottom=0.25)
     pl.xticks(range(len(x_axis)),x_axis,rotation='vertical')
     ax.bar(range(len(x_axis)),y_axis,align='center')
     #pl.show()
