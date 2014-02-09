@@ -28,11 +28,29 @@ def get_data_from_column(file_name,delimiter,*col_no):
 
     return col
 
+# This function gets the data form *output_col_no when input_col_no matches input_col_value
+def get_data_from_column_where(file_name,delimiter,input_col_no,input_col_value,*output_col_no):
+    fh = open(file_name,'rb')
+    col = []
+    for line in csv.reader(fh,delimiter=' ',skipinitialspace=True):
+        store_string=""
+        if line[input_col_no]==input_col_value:
+            for cols in output_col_no:
+                store_string=store_string+str(line[cols])+" "
+            tmp = store_string.rstrip()
+            col.append(tmp)
+    return col
+
 def get_output_dic_day_based():
     global input_file
     day_list_tmp = get_data_from_column(input_file,' ',0)
     day_list = remove_multiple_instances_from_list(day_list_tmp)
     print str(day_list)
+
+    for days in day_list:
+        print str(days)
+        tmp_day_out = map(int,get_data_from_column_where(input_file,' ',0,str(days),9))
+        print str(sum(tmp_day_out)*10/1024)+" MB"
     return
 
 def main():
