@@ -35,9 +35,9 @@ Column description:
 
 Sample Plotted graphs:
   - Date based output
-date_based_output.png
+![alt tag](https://github.com/shadowfax92/Airtel_broadband_analyzer/blob/master/date_based_output.png)
   - Day based output
-day_based_output.png
+![alt tag](https://github.com/shadowfax92/Airtel_broadband_analyzer/blob/master/day_based_output.png)
 
 
 
