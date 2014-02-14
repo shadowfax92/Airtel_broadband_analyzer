@@ -1,3 +1,4 @@
+#!/usr/bin/python
 import csv
 import sys
 import re 
@@ -8,7 +9,7 @@ import pylab as pl
 #   - Days are in 0th column
 #   - Data used in 10KB is in 9th column
 
-input_file='/Users/nsonti/github_projects/airtel_broadband_data_parser/sample_input'
+input_file='/Users/nsonti/github_projects/airtel_broadband_data_parser/data_feb_12.txt'
 
 def plot_graph(input_dict,out_file_name="Default.pdf"):
     x_axis=[]
@@ -115,6 +116,11 @@ def get_output_dic_date_based():
 
 def main():
     global input_file
+    if len(sys.argv)>0:
+        input_file=sys.argv[1]
+        print 'Input file: '+str(input_file)+'\n'
+    else:
+        print 'Defulat input file: '+str(input_file)+'\n'
     get_output_dic_day_based()
     get_output_dic_date_based()
 
