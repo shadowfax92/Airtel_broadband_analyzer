@@ -97,7 +97,7 @@ def get_output_dic_day_based():
         print str(days)+" : "+str(sum(tmp_day_out)*10/1024)+" MB"
         out_dict[str(days)]=out_val
 
-    plot_graph(out_dict,"day_based_output")
+    plot_graph(out_dict,"my_day_based_output")
     return
 
 def get_output_dic_date_based():
@@ -111,7 +111,7 @@ def get_output_dic_date_based():
         print str(date)+" : "+str(sum(tmp_date_out)*10/1024)+" MB"
         out_dict[str(date)]=sum(tmp_date_out)*10/1024
 
-    plot_graph(out_dict,"date_based_output")
+    plot_graph(out_dict,"my_date_based_output")
     return
 
 def main():
