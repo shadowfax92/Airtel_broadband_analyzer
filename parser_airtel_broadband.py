@@ -11,11 +11,38 @@ import pylab as pl
 
 input_file='/Users/nsonti/github_projects/airtel_broadband_data_parser/data_feb_12.txt'
 
-def plot_graph(input_dict,out_file_name="Default.pdf"):
+month_number_dict = {'Jan': 1, 'Feb' : 2, 'Mar' : 3, 'Apr' : 4, 'May' : 5, 'Jun' :6, 'Jul' : 7, 'Aug' : 8, 'Sep' : 9, 'Oct' : 10, 'Nov' : 11, 'Dec' : 12}
+day_list = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+
+def plot_graph(input_dict, graph_type, out_file_name="Default.pdf"):
     x_axis=[]
     y_axis=[]
-    x_axis=input_dict.keys()
-    y_axis=input_dict.values()
+    sorted_date_dict = {} # indexed by key like 'Jun 26' = 626. Value is June 26
+    if graph_type == "date":
+        for key in input_dict.keys():
+            month, date = key.split(' ')
+            new_key = int(str(month_number_dict[month])+str(date))
+            sorted_date_dict[new_key] = key 
+        print sorted_date_dict
+
+        for key in sorted(sorted_date_dict.keys()):
+            if sorted_date_dict[key] in input_dict:
+                x_axis.append(sorted_date_dict[key])
+                y_axis.append(input_dict[sorted_date_dict[key]])
+
+    elif graph_type == "day": # for the day case
+        for day in day_list:
+            if day in input_dict:
+                x_axis.append(str(day))
+                y_axis.append(input_dict[day])
+            else:
+                x_axis.append(str(day))
+                y_axis.append(0)
+
+    else:
+        x_axis=input_dict.keys()
+        y_axis=input_dict.values()
+
     int_x_axis=range(len(x_axis))
     print 'input dict : '+str(input_dict)
     print 'x_axis : '+str(x_axis)
@@ -97,7 +124,7 @@ def get_output_dic_day_based():
         print str(days)+" : "+str(sum(tmp_day_out)*10/1024)+" MB"
         out_dict[str(days)]=out_val
 
-    plot_graph(out_dict,"my_day_based_output")
+    plot_graph(out_dict, "day", "my_day_based_output")
     return
 
 def get_output_dic_date_based():
@@ -111,7 +138,7 @@ def get_output_dic_date_based():
         print str(date)+" : "+str(sum(tmp_date_out)*10/1024)+" MB"
         out_dict[str(date)]=sum(tmp_date_out)*10/1024
 
-    plot_graph(out_dict,"my_date_based_output")
+    plot_graph(out_dict, "date", "my_date_based_output")
     return
 
 def main():
